@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Вторая страница</title>
+</head>
+<body>
+
+<h1>Вторая страница</h1>
+
+<h3>Хорошая защита от инъекций</h3>
+
+<p>
+    {{injectionFirst}}
+    <br>
+    {{injectionSecond}}
+    <br>
+    {{injectionThird}}
+</p>
+
+<p>
+    <br>
+    <b>Введите текст сообщения</b>
+    <br>
+    <br>
+    <label>
+        <textarea id = "field"></textarea>
+    </label>
+    <br>
+    <br>
+    <button onclick = "send();">Отправить</button>
+</p>
+
+<br>
+<h3>Записи</h3>
+<br>
+
+<div>
+    {{#if emptyArr}}
+        <h2>Нет добавленных записей</h2>
+    {{/if}}
+
+    {{#each messagesArr}}
+        <b>Сообщение: </b><span>{{this.content}}</span>
+        <br>
+        <b>Время: </b><span>{{this.dateInfo}}</span>
+        <br>
+        <br>
+    {{/each}}
+</div>
+
+<script>
+    function sendPostQuery(urlParam, bodyParam, callback) {
+        const url = urlParam.toString();
+        const r = new XMLHttpRequest();
+        r.open("POST", url, true);
+        r.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+        r.send(bodyParam.toString());
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                const answer = r.responseText;
+                callback(answer.toString());
+            }
+        }
+    }
+    
+    function send() {
+        const obj = {
+            dateInfo: new Date().toISOString() + "",
+            content: document.getElementById("field").value + "",
+        };
+        const bodyString = JSON.stringify(obj);
+        sendPostQuery("/record/add", bodyString, (ans) => {
+            alert(ans);
+            location.reload();
+        });
+    }
+</script>
+
+</body>
+</html>
+
+

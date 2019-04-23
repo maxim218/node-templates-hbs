@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Первая страница</title>
+</head>
+<body>
+
+    <h1>Первая страница</h1>
+
+    <p>
+        <b>Автор:</b>
+        <span>{{creator}}</span>
+        <br>
+        <br>
+        <b>Почта:</b>
+        <span>{{mail}}</span>
+    </p>
+
+    <h3>
+        Людей: {{arr.length}}
+    </h3>
+
+    <div>
+        {{#each arr}}
+            <span>{{this}}</span>
+            <br>
+        {{/each}}
+    </div>
+
+</body>
+</html>
+
+
